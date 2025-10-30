@@ -14,6 +14,9 @@ const showLoginBtn = document.getElementById("show-login-btn");
 
 let token = "";
 
+// ===== API URL =====
+const API_URL = "/api"; // relative path works both locally and on Render
+
 // ===== SHOW/HIDE LOGIN & REGISTER =====
 showRegisterBtn.onclick = () => {
   loginSection.style.display = "none";
@@ -47,7 +50,7 @@ registerForm.addEventListener("submit", async (e) => {
   const password = document.getElementById("reg-password").value;
 
   try {
-    const res = await fetch("http://localhost:5000/api/auth/register", {
+    const res = await fetch(`${API_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password }),
@@ -75,7 +78,7 @@ loginForm.addEventListener("submit", async (e) => {
   const password = document.getElementById("password").value;
 
   try {
-    const res = await fetch("http://localhost:5000/api/auth/login", {
+    const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -103,7 +106,7 @@ loginForm.addEventListener("submit", async (e) => {
 // ===== FETCH RECIPES =====
 async function fetchRecipes() {
   try {
-    const res = await fetch("http://localhost:5000/api/recipes", {
+    const res = await fetch(`${API_URL}/recipes`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) throw new Error("Failed to fetch recipes");
@@ -145,7 +148,7 @@ recipeForm.addEventListener("submit", async (e) => {
   const source = document.getElementById("recipe-source").value;
 
   try {
-    const res = await fetch("http://localhost:5000/api/recipes", {
+    const res = await fetch(`${API_URL}/recipes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -173,7 +176,7 @@ async function editRecipe(id, currentName, currentSource) {
 
   if (newName && newSource) {
     try {
-      const res = await fetch(`http://localhost:5000/api/recipes/${id}`, {
+      const res = await fetch(`${API_URL}/recipes/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -193,7 +196,7 @@ async function deleteRecipe(id) {
   if (!confirm("Are you sure you want to delete this recipe?")) return;
 
   try {
-    const res = await fetch(`http://localhost:5000/api/recipes/${id}`, {
+    const res = await fetch(`${API_URL}/recipes/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
