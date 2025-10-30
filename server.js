@@ -29,7 +29,8 @@ app.get("*", (req, res) => {
 
 // ===== Start server =====
 const PORT = process.env.PORT || 5000;
-const HOST = "localhost";
-app.listen(PORT, HOST, () => {
-  console.log(`✅ Server running at http://${HOST}:${PORT}`);
+
+// ✅ Important: bind to 0.0.0.0 for Render
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Server running at http://0.0.0.0:${PORT}`);
 });
