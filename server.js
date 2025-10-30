@@ -9,7 +9,15 @@ import recipeRoutes from "./routes/recipes.js";
 
 dotenv.config();
 const app = express();
-app.use(cors());
+
+// ===== CORS =====
+const corsOptions = {
+  origin: "https://frontend-recipe-tracker.onrender.com", // your deployed frontend URL
+  credentials: true, // allow cookies/headers if needed
+};
+app.use(cors(corsOptions));
+
+// ===== Middleware =====
 app.use(express.json());
 
 // ===== API Routes =====
@@ -29,8 +37,6 @@ app.get("*", (req, res) => {
 
 // ===== Start server =====
 const PORT = process.env.PORT || 5000;
-
-// Bind to 0.0.0.0 internally (needed for Render), but log localhost for local testing
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`✅ Server running locally at http://localhost:${PORT}`);
+  console.log(`✅ Server running at http://localhost:${PORT}`);
 });
